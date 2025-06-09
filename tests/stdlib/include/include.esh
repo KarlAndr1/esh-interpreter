@@ -1,0 +1,9 @@
+include tests/stdlib/include/test1.mod
+
+assert (f 1 2 == 3)
+
+counter = 0
+include tests/stdlib/include/test2.mod
+include tests/stdlib/include/test2.mod
+
+assert ($counter == 2)

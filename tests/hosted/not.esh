@@ -1,0 +1,12 @@
+function yieldfalse with x do
+	return null
+end
+
+assert (not null)
+assert (not yieldfalse 1 == true)
+
+x = 0
+if not yieldfalse 1 then
+	x = 1
+end
+assert ($x == 1)

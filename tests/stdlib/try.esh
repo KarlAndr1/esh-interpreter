@@ -1,0 +1,12 @@
+function add with x y do
+	return $x + $y
+end
+
+with do
+	local res, err = try $add 5 {}
+	assert ($res == null)
+	assert ($err != null)
+	res, err = try $add 5 10
+	assert ($res == 15)
+	assert ($err == null)
+end!

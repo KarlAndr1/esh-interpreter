@@ -1,0 +1,1 @@
+assert (repeat foo 3 == foofoofoo)

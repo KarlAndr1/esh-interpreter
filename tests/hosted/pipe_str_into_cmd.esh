@@ -1,0 +1,2 @@
+x = "1\n2\n3\n4\n5\n" | sort -r | as-string
+assert ($x == "5\n4\n3\n2\n1\n")

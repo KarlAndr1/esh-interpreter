@@ -1,0 +1,14 @@
+yield-array = co with a do
+	fori $a with _ x do
+		yield $x
+	end
+end
+
+res = yield-array { 51, 23, 20, 52, 191, -12, 92 } | filter with x ($x > 51)
+
+assert (next $res == 52)
+assert (next $res == 191)
+assert (next $res == 92)
+for 0 128 with _ do
+	assert (next $res == null)
+end

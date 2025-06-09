@@ -1,0 +1,12 @@
+f = co with do
+	yield 5
+	yield foobar
+	yield 42
+end
+
+x = collect (f!)
+
+assert (sizeof $x == 3)
+assert ($x:0 == 5)
+assert ($x:1 == foobar)
+assert ($x:2 == 42)

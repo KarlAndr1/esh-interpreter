@@ -1,0 +1,2 @@
+assert (join { foo, bar, etc } ", " == "foo, bar, etc")
+assert (join { foo, bar, etc } == foobaretc)

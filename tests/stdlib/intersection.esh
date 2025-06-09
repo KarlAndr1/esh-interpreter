@@ -1,0 +1,7 @@
+a = { a = foo, b = bar }
+b = { b = foobar, c = xyz }
+
+res = intersection $a $b
+
+assert (sizeof $res == 1)
+assert ($res:b == foobar)

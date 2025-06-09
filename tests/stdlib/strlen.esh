@@ -1,0 +1,2 @@
+assert (strlen "foobar" == 6)
+assert (strlen "aäö你ð" == 5)

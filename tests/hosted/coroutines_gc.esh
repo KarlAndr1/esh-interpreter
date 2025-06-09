@@ -1,0 +1,22 @@
+with do
+	local obj1 = { foo, bar }
+	
+	local c = co with x y do
+		yield $x
+		yield $y
+		for 0 1000 with i do
+			local testobj = { i }
+		end
+		yield ($x + $y)
+	end
+	
+	i = c 7 11
+
+	assert (next $i == 7)
+	assert (next $i == 11)
+	assert (next $i == 18)
+	assert (next $i == null)
+	
+	assert ($obj1:0 == foo)
+	assert ($obj1:1 == bar)
+end!

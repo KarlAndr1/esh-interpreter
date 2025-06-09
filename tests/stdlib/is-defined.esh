@@ -1,0 +1,9 @@
+x = foo
+y = bar
+
+assert (is-defined x)
+assert (is-defined y)
+assert (not is-defined z)
+
+assert (is-defined x y)
+assert (not is-defined x z y)

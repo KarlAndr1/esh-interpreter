@@ -1,0 +1,32 @@
+a = { foo, bar, foo, etc, bar, foo }
+c = {}
+o = {}
+
+i = 0
+
+fori $a with n x do
+	c:$x = ($c:$x or 0) + 1
+	o:$i = $x
+	assert ($n == $i)
+	i = $i + 1
+end
+
+assert ($c:foo == 3)
+assert ($c:bar == 2)
+assert ($c:etc == 1)
+assert (sizeof $c == 3)
+
+assert (sizeof $o == 6)
+assert ($o:0 == foo)
+assert ($o:1 == bar)
+assert ($o:2 == foo)
+assert ($o:3 == etc)
+assert ($o:4 == bar)
+assert ($o:5 == foo)
+
+a = { foo, bar, foo, etc, bar, foo }
+res = fori $a with n x do
+	if $n == 3 then return $x end
+end
+
+assert ($res == etc)

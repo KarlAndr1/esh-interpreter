@@ -1,0 +1,21 @@
+val = a
+if null then
+	val = b
+else if null then
+	val = c
+end
+
+assert ($val == a)
+
+val = a
+
+if null then
+	val = b
+else
+	if null then
+		val = c
+	end
+	val = "$val b" 
+end
+
+assert ($val == "a b")

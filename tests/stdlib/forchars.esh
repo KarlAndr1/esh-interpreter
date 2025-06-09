@@ -1,0 +1,36 @@
+chars = {}
+forchars "foobar" with _ c do
+	chars:(sizeof $chars) = $c
+end
+
+assert (sizeof $chars == 6)
+assert ($chars:0 == f)
+assert ($chars:1 == o)
+assert ($chars:2 == o)
+assert ($chars:3 == b)
+assert ($chars:4 == a)
+assert ($chars:5 == r)
+
+chars = {}
+forchars "aäö你ð" with _ c do
+	chars:(sizeof $chars) = c
+end
+
+assert (sizeof $chars == 5)
+assert ($chars:0 == "a")
+assert ($chars:1 == "ä")
+assert ($chars:2 == "ö")
+assert ($chars:3 == "你")
+assert ($chars:4 == "ð")
+
+chars = {}
+res = forchars "foobar" with _ c do
+	if $c == b then return "value is: $c" end
+	chars:(sizeof $chars) = $c
+end
+
+assert (sizeof $chars == 3)
+assert ($chars:0 == f)
+assert ($chars:1 == o)
+assert ($chars:2 == o)
+assert ($res == "value is: b")

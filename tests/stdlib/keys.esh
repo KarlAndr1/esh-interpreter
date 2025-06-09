@@ -1,0 +1,9 @@
+res = {}
+keys { foo, bar, etc = foobar } | foreach with k do
+	res:$k = _
+end
+
+assert (sizeof $res == 3)
+assert ($res:0)
+assert ($res:1)
+assert ($res:etc)

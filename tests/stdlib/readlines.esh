@@ -1,0 +1,14 @@
+write "foo\nbar\nfoobar etc\netc" tmp/test
+
+lines = {}
+
+res = readlines tmp/test with l do
+	lines:(sizeof $lines) = $l
+	if beginswith $l foobar then return foobar end
+end
+
+assert ($res == foobar)
+assert (sizeof $lines == 3)
+assert ($lines:0 == foo)
+assert ($lines:1 == bar)
+assert ($lines:2 == "foobar etc")

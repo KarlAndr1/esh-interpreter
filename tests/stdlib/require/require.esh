@@ -1,0 +1,6 @@
+counter = 0
+require "tests/stdlib/require/test.mod"
+require "tests/stdlib/require/test.mod"
+
+assert ($counter == 1)
+assert (f 5 3 == 8)

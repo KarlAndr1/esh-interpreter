@@ -1,0 +1,15 @@
+c = co with do
+	yield 1
+	yield -10
+	yield 100
+	yield 20
+end
+
+res = c! | map with x ($x * 2)
+
+assert (next $res == 2)
+assert (next $res == -20)
+assert (next $res == 200)
+assert (next $res == 40)
+assert (next $res == null)
+assert (next $res == null)

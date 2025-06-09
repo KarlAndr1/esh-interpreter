@@ -1,0 +1,2 @@
+assert (sizeof { foo = 1, bar = 2, etc = foobar } == 3)
+assert (sizeof foobar == 6)

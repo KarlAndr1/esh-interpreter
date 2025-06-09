@@ -1,0 +1,29 @@
+values = { foo = 52, bar = 22, etc = 30 }
+dst = {}
+
+foreach-in $values with k v do
+	dst:$k = $v
+end
+
+assert (sizeof $dst == 3)
+assert ($dst:foo == 52)
+assert ($dst:bar == 22)
+assert ($dst:etc == 30)
+
+
+
+values = { foo = 52, bar = 22, etc = 30 }
+res = foreach-in $values with k v do
+	if $v == 30 then return foobar end
+end
+assert ($res == foobar)
+
+res = foreach-in $values with k v do
+	if $v == 52 then return foobar end
+end
+assert ($res == foobar)
+
+res = foreach-in $values with k v do
+	if $v == 22 then return foobar end
+end
+assert ($res == foobar)

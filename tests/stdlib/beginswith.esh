@@ -1,0 +1,3 @@
+assert (beginswith foobar foo)
+assert (beginswith foobar fao == null)
+assert (beginswith foo foobar == null)

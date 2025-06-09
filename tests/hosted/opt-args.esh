@@ -1,0 +1,10 @@
+function f with x y? do
+	if $y == null then
+		assert ($x == foo)
+	else
+		assert ($x == bar and $y == etc)
+	end
+end
+
+f foo
+f bar etc

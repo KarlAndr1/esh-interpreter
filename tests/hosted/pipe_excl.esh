@@ -1,0 +1,1 @@
+ls! | with x (assert $x != null)

@@ -1,0 +1,7 @@
+x = alphsort { abce, bcd, abc, abcg, f }
+
+assert ($x:0 == abc)
+assert ($x:1 == abce)
+assert ($x:2 == abcg)
+assert ($x:3 == bcd)
+assert ($x:4 == f)

@@ -1,0 +1,10 @@
+res = {}
+entries { foo, bar, etc = foobar } | foreach with x do
+	local k, v = x
+	res:$k = $v
+end
+
+assert (sizeof $res == 3)
+assert ($res:0 == foo)
+assert ($res:1 == bar)
+assert ($res:etc == foobar)

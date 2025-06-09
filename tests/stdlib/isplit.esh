@@ -1,0 +1,11 @@
+r1 = isplit "foo,bar,etc" ","
+assert (sizeof $r1 == 3)
+assert ($r1:0 == "foo")
+assert ($r1:1 == "bar")
+assert ($r1:2 == "etc")
+
+r2 = isplit "foobarDELIMothervalueDELIM" "DELIM"
+assert (sizeof $r2 == 3)
+assert ($r2:0 == foobar)
+assert ($r2:1 == othervalue)
+assert ($r2:2 == "")

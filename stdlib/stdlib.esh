@@ -1,0 +1,355 @@
+# Finds all files matching a given wildcard pattern
+# pattern = string
+# returns array
+function wc with pattern do
+	local patterns = split $pattern "/"
+	
+	local root = null
+	if beginswith $pattern "/" then
+		root = "/"
+	else
+		root = "."
+	end
+	
+	result = {}
+	
+	function seek with p i do
+		foreach (dirlist $p) with _ f do
+			if match $f $patterns:$i == null then return null end
+			
+			local path = $f
+			assert ($p != "")
+			if $p == "/" then
+				path = "/$f"
+			else if $p != "." then
+				path = "$($p)/$f"
+			end
+			
+			if i == sizeof $patterns - 1 then
+				result:(sizeof $result) = $path
+			else if isdir $path then
+				seek $path ($i + 1)
+			end
+		end
+	end
+	
+	if root == "/" then
+		seek $root 1
+	else
+		seek $root 0
+	end
+	
+	return $result
+end
+
+# Parses a csv string into an object of the form
+# { { string* }* }
+# That is to say, an array of rows, where each row is an array of strings
+function parse-csv with csv delimiter? do
+	delimiter = $delimiter or ","
+	return split $csv "\n" | map with l do
+		return split $l $delimiter
+	end
+end
+
+# Parses an array of command line arguments
+# parse-opts { -ax, foo, --arg bar, a, b, c } { -a = 0, -x = 1, --arg = 1 }
+# gives { -a = true, -x = foo, --arg = bar, args = { a, b, c } }
+function parse-opts with argv opts do
+	local current-opt = null
+	local err = null
+	local res = {}
+	fori $argv with _ x do
+		if $current-opt then
+			if $current-opt == "args" then
+				res:args:(sizeof $res:args) = $x
+			else
+				res:$current-opt = $x
+				current-opt = null
+			end
+		else
+			if beginswith $x "--" then
+				local n-args = $opts:$x
+				if $n-args == null then
+					err = "Unknown option '$x'"
+				else if $n-args == 0 then
+					res:$x = true
+				else
+					current-opt = $x
+				end
+			else if beginswith $x "-" then
+				local flags = (match $x "-(*)"):0
+				forchars $flags with _ c do
+					local opt = "-$c"
+					local n-args = $opts:$opt
+					if $n-args == null then
+						err = "Unknown option '$opt'"
+					else if $n-args == 0 then
+						res:$opt = true
+					else
+						if $current-opt != null then
+							err = "Cannot combine multiple options that take parameters ($current-opt and $opt) in the same argument '$x'"
+						else
+							current-opt = $opt
+						end
+					end
+				end
+			else
+				current-opt = "args"
+				res:args = {}
+			end
+		end
+	end
+	
+	if $current-opt != "args" and $current-opt != null then
+		err = "Missing parameter for option '$current-opt'"
+	end
+	
+	if $err then return null, $err else return $res, null end
+end
+
+function left-pad with str pad len do
+	local pad-n = ($len - (strlen $str)) / strlen $pad
+	if $pad-n < 0 then return str end
+
+	return "$(repeat $pad $pad-n)$str"
+end
+
+function right-pad with str pad len do
+	local pad-n = ($len - (strlen $str)) / strlen $pad
+	if $pad-n < 0 then return str end
+
+	return "$str$(repeat $pad $pad-n)"
+end
+
+function prompt with on-line? draw-prompt? draw-line? on-action? do
+	draw-line = $draw-line or $puts
+	draw-prompt = $draw-prompt or with (null)
+	on-line = $on-line or with line do return $line end
+	on-action = $on-action or with action line cursor do return line, cursor end
+	
+	ansi-escapes = {
+		up = "$(ascii 27)[A",
+		down = "$(ascii 27)[B",
+		left = "$(ascii 27)[D",
+		right = "$(ascii 27)[C",
+		save-pos = "$(ascii 27)[s",
+		load-pos = "$(ascii 27)[u",
+	}
+	
+	draw-prompt
+	puts $ansi-escapes:save-pos
+	
+	local history = {}
+	local history-index = 0
+	local line = ""
+	local cursor = 0
+	
+	local res = null
+	rawprompt with c do
+		if $c == ascii 4 then
+			puts "\n\r"
+			return break
+		end
+		
+		if $c == ascii 3 then
+			line = ""
+			cursor = 0
+		else if $c == $ansi-escapes:up then
+			if $history-index != 0 then
+				history-index = $history-index - 1
+				line = $history:$history-index
+				cursor = strlen $line
+			end
+		else if $c == $ansi-escapes:down then
+			if $history-index != sizeof $history then
+				history-index = $history-index + 1
+				line = $history:$history-index or ""
+				cursor = strlen $line
+			end
+		else if $c == $ansi-escapes:left then
+			if $cursor != 0 then cursor = $cursor - 1 end
+		else if $c == $ansi-escapes:right then
+			if $cursor != strlen $line then cursor = $cursor + 1 end
+		else if $c == "\n" then
+			puts (ascii 10 13)
+			res = on-line $line
+			if $res != null then return break end
+			draw-prompt
+			puts $ansi-escapes:save-pos
+			history:(sizeof $history) = $line
+			history-index = sizeof $history
+			line = ""
+			cursor = 0
+		else if $c == ascii 127 then
+			if $cursor == 0 then return null end
+			new-line = ""
+			forchars $line with i c do
+				if $i != $cursor - 1 then
+					new-line = "$new-line$c"
+				end
+			end
+			line = $new-line
+			cursor = $cursor - 1
+		else if $c == "\t" then
+			line, cursor = on-action "\t" $line $cursor
+		else if isprint $c then
+			if $cursor == strlen $line then
+				line = "$line$c"
+			else
+				new-line = ""
+				forchars $line with i c2 do
+					if $i == $cursor then new-line = "$new-line$c" end
+					new-line = "$new-line$c2"
+				end
+				line = $new-line
+			end
+			cursor = $cursor + 1
+		end
+		
+		local line-len = strlen $line
+		
+		puts $ansi-escapes:load-pos
+		draw-line $line
+		puts "$(ascii 27)[K"
+		if $cursor != $line-len then
+			puts "$(ascii 27)[$($line-len - $cursor)D"
+		end
+	end
+	
+	return $res
+end
+
+prompt-conf = {}
+
+prompt-conf:autocomplete = with line cursor do
+	local word = null
+	local word-start = null
+	local word-end = strlen $line
+	forchars $line with i c do		
+		if is-space $c then
+			if $i + 1 > $cursor then
+				word-end = $i
+				return break
+			end
+			word = null
+		else
+			if $word == null then
+				word-start = $i
+				word = ""
+			end
+			word = "$word$c"
+		end
+	end
+	
+	local options = wc "$($word or "")*"
+	
+	if sizeof $options == 1 then
+		if match $options:0 "*%s+*" then
+			options:0 = "'$($options:0)'"
+		end
+		
+		local new-line = ""
+		forchars $line with i c do
+			if $i == word-start then
+				new-line = "$new-line$($options:0)"
+				cursor = strlen $new-line
+			else if $i < word-start or $i + 1 > $word-end then
+				new-line = "$new-line$c"
+			end
+		end
+		line = $new-line
+	end
+	
+	return $line, $cursor, $options
+end
+
+function esh-prompt with args do
+	function col with n do
+		return "$(ascii 27)[$($n)m"
+	end
+
+	function draw-prompt with do
+		local d = strip (pwd!)
+		local h = getenv HOME
+		
+		local esc = ascii 27
+		
+		local m = match $d "$h(*)"
+		if $m != null then
+			d = "~$($m:0)"
+		end
+		puts "\n\n"
+		puts "$(ascii 27)[A"
+		puts "$(col 36)$d $(col 35)\$ $(col 0)"
+	end
+	
+	function on-line with line do
+		local res, err = try $eval $line
+		if $err then
+			puts "$(col 31)$err$(col 0)\n\r"
+		else if $res != null then
+			print ">" $res "\r"
+		end
+	end
+	
+	local prev-was-err = false
+	
+	function draw-line with line do
+		local res, err = try $load $line
+		if $err then
+			prev-was-err = true
+			puts "$(col 31)"
+			local lines = split $err "\n"
+			puts "$(ascii 27)[?7l"
+			puts "$(ascii 27)[B"
+			puts $lines:(sizeof $lines - 1)
+			puts "$(ascii 27)[K"
+			puts "\n\r"
+			puts $lines:0
+			puts "$(ascii 27)[K"
+			puts "$(ascii 27)[2A"
+			puts "$(ascii 27)[?7h"
+			puts "$(col 0)"
+		else if $prev-was-err then
+			prev-was-err = false
+			puts "$(ascii 27)[J"
+		end
+		
+		puts "$(ascii 27)[u"
+		puts $line
+	end
+	
+	function on-action with action line cursor do
+		if $action == "\t" then
+			local options = null
+			line, cursor, options = $prompt-conf:autocomplete $line $cursor
+			if sizeof $options > 1 then
+				puts "$(ascii 27)[?7l"
+				puts "\n\r"
+				puts "$(join $options ", ")"
+				puts "$(ascii 27)[J"
+				puts "$(ascii 27)[A"
+				puts "$(ascii 27)[?7h"
+			end
+		end
+		
+		return $line, $cursor
+	end
+	
+	prompt $on-line $draw-prompt $draw-line $on-action
+end
+
+export = with obj do null end
+_libs = {}
+
+function require with path do
+	if $_libs:$path then return $_libs:$path end
+	
+	local result = _
+	export = with e do result = $e end
+	include $path
+	
+	_libs:$path = $result
+	return $result
+end

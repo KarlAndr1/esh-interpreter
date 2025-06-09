@@ -1,0 +1,1 @@
+assert (strip " \tfoo \nbar   \n   " == "foo \nbar")

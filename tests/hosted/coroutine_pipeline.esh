@@ -1,0 +1,39 @@
+range = co with n do
+	for 0 $n with i do
+		yield $i
+	end
+end
+
+filter-even = co with in do
+	loop with do
+		local n = next $in
+		if $n == null then return break end
+		if $n / 2 * 2 == $n then yield $n end
+	end
+end
+
+as-array = with in do
+	local res = {}
+	foreach $in with x do
+		res:(sizeof $res) = $x
+	end
+	return $res
+end
+
+sum = with in do
+	local s = 0
+	foreach $in with x do
+		s = $s + $x
+	end
+	return $s
+end
+
+res = range 10 | filter-even | sum
+assert ($res == 20)
+
+res = range 10 | filter-even | as-array
+assert ($res:0 == 0)
+assert ($res:1 == 2)
+assert ($res:2 == 4)
+assert ($res:3 == 6)
+assert ($res:4 == 8)

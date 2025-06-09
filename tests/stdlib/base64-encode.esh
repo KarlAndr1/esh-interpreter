@@ -1,0 +1,9 @@
+tests = {
+	"Hello world! Testing foobar42",
+	"Hello world! Testing foobar4",
+	"Hello world! Testing foobar"
+}
+
+foreach-in $tests with _ v do
+	assert (base64/encode $v | base64 -d | as-string == $v)
+end

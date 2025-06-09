@@ -1,0 +1,8 @@
+x = match "foo bar" "(%w)%s(%w)"
+assert (sizeof $x == 2)
+assert ($x:0 == foo)
+assert ($x:1 == bar)
+
+assert (match "foobar" "(%w)%s(%w)" == null)
+
+assert (match "main.c" *.c)

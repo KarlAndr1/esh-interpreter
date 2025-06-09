@@ -1,0 +1,6 @@
+include stdlib/docs.esh
+
+docs = parse-docs src/esh_stdlib.c
+
+to-json $docs | write docs/stdlib.json
+docs-to-html $docs | write docs/stdlib.html

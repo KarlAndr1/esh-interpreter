@@ -1,0 +1,5 @@
+x = kfilter { 51 = 12, 23 = 42, 20 = 50, 52 = 15, 191 = 16, -12 = 5, 92 = 20 } with k v ($k > 51 and $v < 20)
+
+assert (sizeof $x == 2)
+assert ($x:52 == 15)
+assert ($x:191 == 16)

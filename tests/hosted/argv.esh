@@ -1,0 +1,5 @@
+result = ./bin/esh tests/hosted/argv.script Hello World | as-string
+assert ($result == "Ok\n")
+
+result = ./bin/esh tests/hosted/argv.script Hello Worl | as-string
+assert ($result == "Fail\n")

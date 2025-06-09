@@ -1,0 +1,15 @@
+sum = 0
+for 0 100 with i do
+	sum = $sum + $i
+end
+
+assert ($sum == 4950)
+
+sum = 0
+res = for 0 100 with i do
+	if $i == 50 then return $i * 3 end
+	sum = $sum + $i
+end
+
+assert ($res == 150)
+assert ($sum == 1225)

@@ -1,0 +1,15 @@
+i = 0
+iter { foo, bar, etc, foobar = somevalue } | foreach with x do
+	if $i == 0 then 
+		assert ($x == foo)
+	else if $i == 1 then 
+		assert ($x == bar)
+	else if $i == 2 then
+		assert ($x == etc)
+	else 
+		assert null 
+	end
+	i = $i + 1
+end
+
+assert ($i == 3)

@@ -1,0 +1,6 @@
+x = numsort { 421, -21, 2, 632 }
+
+assert ($x:0 == -21)
+assert ($x:1 == 2)
+assert ($x:2 == 421)
+assert ($x:3 == 632)

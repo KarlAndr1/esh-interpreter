@@ -1,0 +1,14 @@
+str = "This is an example message"
+
+write $str tmp/test.txt
+assert (cat tmp/test.txt | as-string == $str)
+
+(co with do
+	yield "foo"
+	yield " bar"
+	yield " etc"
+end)! | write tmp/test.txt
+assert (cat tmp/test.txt | as-string == "foo bar etc")
+
+("test123 foobar456") | cat | write tmp/test.txt
+assert (cat tmp/test.txt | as-string == "test123 foobar456")

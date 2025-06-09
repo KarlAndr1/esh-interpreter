@@ -1,0 +1,5 @@
+res = { foo = 12, bar = 2, etc = 20 } | imap with x ($x * 2)
+
+assert ($res:foo == 24)
+assert ($res:bar == 4)
+assert ($res:etc == 40)

@@ -1,0 +1,13 @@
+squares = co with i do
+	for 1 $i with i do
+		yield ($i * $i)
+	end
+end
+
+assert (squares 10 | nth 3 == 9)
+assert (squares 10 | nth 1 == 1)
+assert (squares 10 | nth 9 == 81)
+assert (squares 10 | nth 10 == null)
+assert (squares 10 | nth 15 == null)
+assert (squares 10 | nth 0 == null)
+assert (squares 10 | nth -10 == null)

@@ -1,0 +1,5 @@
+assert (to-json foo == '"foo"')
+
+obj = { foo = bar, etc = xyz }
+assert (to-json $obj == '{"foo": "bar", "etc": "xyz"}' or to-json $obj == '{"etc": "xyz", "foo": "bar"}')
+assert (to-json { foo, bar, etc } == '["foo", "bar", "etc"]')

@@ -1,0 +1,51 @@
+function yield3 with x do
+	return $x, $x + 1, $x + 2
+end
+
+with do
+	local x, y, z = yield3 1
+	assert ($x == 1)
+	assert ($y == 2)
+	assert ($z == 3)
+end!
+
+with do
+	local x, y, z, w, i = yield3 5
+	assert ($x == 5)
+	assert ($y == 6)
+	assert ($z == 7)
+	assert ($w == null)
+	assert ($i == null)
+end!
+
+with do
+	local x, y = yield3 10
+	assert ($x == 10)
+	assert ($y == 11)
+end!
+
+with do
+	local x = yield3 20
+	assert (sizeof $x == 3)
+	assert ($x:0 == 20)
+	assert ($x:1 == 21)
+	assert ($x:2 == 22)
+end!
+
+with do
+	assert (sizeof (yield3 30) == 3)
+	assert (yield3 40 | sizeof == 3)
+end!
+
+function yieldarray with x do
+	local a = { $x, $x * 2, $x * 3 }
+	return $a
+end
+
+with do
+	local x, y, z, w = yieldarray 10
+	assert ($x == 10)
+	assert ($y == 20)
+	assert ($z == 30)
+	assert ($w == null)
+end!

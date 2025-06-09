@@ -1,0 +1,26 @@
+c = co with x y do
+	yield $x
+	yield $y
+	local testobj = {}
+	testobj = { foo, bar }
+	yield ($x + $y)
+end
+
+i = c 5 10
+
+assert (next $i == 5)
+assert (next $i == 10)
+assert (next $i == 15)
+assert (next $i == null)
+
+range = co with n do
+	for 0 $n with i do
+		yield $i
+	end
+end
+
+i = range 3
+assert (next $i == 0)
+assert (next $i == 1)
+assert (next $i == 2)
+assert (next $i == null)

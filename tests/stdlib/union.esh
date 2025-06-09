@@ -1,0 +1,9 @@
+a = { a = foo, b = bar }
+b = { b = foobar, c = xyz }
+
+res = union $a $b
+
+assert (sizeof $res == 3)
+assert ($res:a == foo)
+assert ($res:b == foobar)
+assert ($res:c == xyz)

@@ -1,0 +1,209 @@
+function parse-docs with path do
+	local entries = {}
+	local current = null
+	readlines $path with line do
+		line = strip $line
+		if $current == null then
+			if $line == "/*@" then
+				current = {}
+				entries:(sizeof $entries) = $current
+			end
+			return null
+		end
+		
+		if $line == "*/" then
+			current = null
+			return null
+		end
+		
+		current:(sizeof $current) = $line
+	end
+	
+	local docs = {}
+	fori $entries with _ entry do
+		local doc-entry = {}
+		
+		local first-row = split ($entry:0 or "")
+		doc-entry:name = $first-row:0
+		doc-entry:args = slice $first-row 1 (sizeof $first-row)
+		
+		local rest = slice $entry 1 (sizeof $entry)
+		
+		local typedefs-end = fori $rest with i line do
+			if $line == "" then return $i end
+		end or 0
+		
+		local typedefs = slice $rest 0 $typedefs-end
+		local body = slice $rest ($typedefs-end + 1) (sizeof $rest)
+		
+		local types = {}
+		fori $typedefs with _ line do
+			local cols = split $line
+			types:($cols:0) = slice $cols 1 (sizeof $cols) | join " "
+		end
+		
+		local parsed-body = {}
+		local block = null
+		fori $body with _ line do
+			if $block then
+				if $line == "---" then
+					block = null
+				else
+					block:(sizeof $block - 1) = $line
+				end
+				return null
+			end
+			
+			local block-m = match $line '---%s(*)'
+			if $block-m then
+				block = {}
+				block:name = $block-m:0
+				parsed-body:(sizeof $parsed-body) = $block
+			else
+				parsed-body:(sizeof $parsed-body) = $line
+			end
+		end
+		
+		doc-entry:typedefs = $types
+		doc-entry:body = $parsed-body
+		
+		docs:($doc-entry:name) = $doc-entry
+	end
+	
+	return $docs
+end
+
+function docs-to-html with docs do
+	local res = {}
+	function html with line do
+		res:(sizeof $res) = $line
+	end
+	
+	html "<html>"
+	
+	html "<head><link rel='stylesheet' href='style.css'></head>"
+	
+	html "<body>"
+	
+	html "<div class='docs-index'>"
+	html "<h1>Index</h1>"
+	foreach $docs with name _ do
+		html "<p><a href='#$name'>$name</a></p>"
+	end
+	html "</div>"
+	
+	html "<div class='docs-entries'>"
+	html "<h1>Entries</h1>"
+	foreach $docs with name entry do
+		html "<div><h2 id='$name'>$name</h2>"
+		
+		local decl = { "<span class='hp'>$name</span>" }
+		fori $entry:args with i arg do decl:(i + 1) = $arg end
+		html "<pre class='decl'>$(join $decl " ")</pre>"
+		
+		html "<div class='typedefs'>"
+		html "<h3>Types</h3>"
+		html "<table class='arg-types'>"
+		fori $entry:args with _ arg do
+			html "<tr>
+				<td><span class='arg-name'>$arg</span></td>
+				<td><span class='type'>$($entry:typedefs:$arg)</span></td>
+			</tr>"
+		end
+
+		html "<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>$($entry:typedefs:"@returns")</span></td>
+		</tr>"
+
+		html "</table>"
+		
+		html "<div class='doc-entry'>"
+		fori $entry:body with _ entry do
+			if $entry == "" then
+				html "<br/>"
+			else if not is-string $entry then
+				html "<div class='codeblock'>"
+				html "<h3 class='title'>$($entry:name)</h3>"
+				html "<pre>$(join $entry "\n")</pre>"
+				html "</div>"
+			else
+				html "<p>$entry</p>"
+			end
+		end
+		html "</div>"
+		
+		html "</div>"
+	end
+	html "</div>"
+	html "</body>"
+	
+	html "</html>"
+	
+	return join $res "\n"
+end
+
+stdlib-docs = { _dir = _, stdlib = parse-docs src/esh_stdlib.c }
+stdlib-docs:stdlib:_dir = _
+
+function docs with entry? do
+	function col with n do
+		return "$(ascii 27)[$($n)m"
+	end
+	local col-a = col 36
+	local col-b = col 35
+	local col-codeblock = col 100
+	local col-inv = "$(col 47)$(col 30)"
+	local col-reset = col 0
+	
+	local at = $stdlib-docs
+	if $entry then
+		split $entry "/" | fori with _ key do
+			at = $at:$key
+			if $at == null then
+				panic "Unkown docs entry '$entry'"
+			end
+		end
+	end
+	
+	if $at:_dir then
+		print "In directory:" ($entry or "") 
+		foreach $at with name entry do
+			if $name == _dir then return null end
+			print "- $name"
+		end
+	else
+		print $entry
+		print "\t$($at:name)" (join $at:args ' ')
+		local padding = 0
+		fori $at:args with _ arg do
+			local p = strlen $arg + 4
+			if $p > $padding then padding = $p end
+		end
+		print "Types"
+		fori $at:args with _ arg do
+			print "\t$col-b$arg$col-a$(repeat " " ($padding - strlen $arg))$($at:typedefs:$arg)$col-reset"
+		end
+		print "\t$col-b@returns$col-a$(repeat " " ($padding - strlen "@returns"))$($at:typedefs:"@returns")$col-reset"
+		print ""
+		print "Description"
+		
+		fori $at:body with _ entry do
+			if is-string $entry then
+				print "\t$entry"
+			else
+				print "\t---" $entry:name
+				local max-line-len = 0
+				fori $entry with _ line do
+					local len = strlen $line
+					if $len > $max-line-len then max-line-len = $len end
+				end
+				fori $entry with i line do
+					local reset-col = $col-reset
+					local pad = repeat " " ($max-line-len - strlen $line)
+					print "\t$col-inv $($i + 1) $col-reset$col-codeblock $line$pad" $col-reset
+				end
+			end
+		end
+	end
+end

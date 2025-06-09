@@ -1,0 +1,2 @@
+assert (includes "etc bar foobar...,\nqwerty" "oba")
+assert (not includes "etc bar foobar...,\nqwerty" "obe")

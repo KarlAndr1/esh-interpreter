@@ -1,0 +1,36 @@
+assert (parse-json '"foo"' == foo)
+
+obj = parse-json '{
+	"foo": "bar",
+	"nested": {
+		"etc": "value"
+	}
+}'
+
+assert (sizeof $obj == 2)
+assert ($obj:foo == bar)
+assert (sizeof $obj:nested == 1)
+assert ($obj:nested:etc == value)
+
+assert (parse-json 512 == 512)
+assert (parse-json -37 == -37)
+assert (parse-json 21.5 == 21.5)
+assert (parse-json -21.5e+25 == -21.5e+25)
+
+array = parse-json '[
+	"foo",
+	"bar",
+	{ "foo": "bar" }
+]'
+
+assert (sizeof $array == 3)
+assert ($array:0 == foo)
+assert ($array:1 == bar)
+assert (sizeof $array:2 == 1)
+assert ($array:2:foo == bar)
+
+assert (parse-json true == true)
+assert (parse-json false == false)
+
+mknull = with x do end
+assert (parse-json "null" == (mknull 1))

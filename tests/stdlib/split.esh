@@ -1,0 +1,32 @@
+r1 = split (printf "foo,bar,etc") ","
+assert (next $r1 == "foo")
+assert (next $r1 == "bar")
+assert (next $r1 == "etc")
+assert (next $r1 == null)
+
+r2 = split (printf "foobarDELIMothervalueDELIM") "DELIM"
+assert (next $r2 == foobar)
+assert (next $r2 == othervalue)
+assert (next $r2 == "")
+assert (next $r2 == null)
+
+
+
+yields = co with s do
+	forchars $s with _ c do
+		yield $c
+	end
+end
+
+r3 = split (yields "   foobar test   \n etc   ")
+assert (next $r3 == foobar)
+assert (next $r3 == test)
+assert (next $r3 == etc)
+assert (next $r3 == null)
+
+
+r4 = split "foo,bar,etc" ","
+assert (next $r4 == "foo")
+assert (next $r4 == "bar")
+assert (next $r4 == "etc")
+assert (next $r4 == null)

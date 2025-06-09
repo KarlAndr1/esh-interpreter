@@ -1,0 +1,8 @@
+coseq = co with a b do
+	for $a ($b + 1) with i do
+		yield "$i\n"
+	end
+end
+
+x = coseq 1 5 | sort -r | as-string
+assert ($x == "5\n4\n3\n2\n1\n")

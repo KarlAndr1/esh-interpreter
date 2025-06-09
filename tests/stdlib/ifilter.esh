@@ -1,0 +1,6 @@
+x = ifilter { 51, 23, 20, 52, 191, -12, 92 } with x ($x > 51)
+
+assert (sizeof $x == 3)
+assert ($x:0 == 52)
+assert ($x:1 == 191)
+assert ($x:2 == 92)

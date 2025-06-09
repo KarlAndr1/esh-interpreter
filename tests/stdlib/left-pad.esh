@@ -1,0 +1,5 @@
+include stdlib/stdlib.esh
+
+assert (left-pad foo x 10 == xxxxxxxfoo)
+
+assert (left-pad foo bar 9 == barbarfoo)

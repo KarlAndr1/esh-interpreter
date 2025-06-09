@@ -1,0 +1,22 @@
+values = { }
+
+forevery foo bar foo foo bar etc with x do
+	values:$x = ($values:$x or 0) + 1
+end
+
+assert (sizeof $values == 3)
+assert ($values:foo == 3)
+assert ($values:bar == 2)
+assert ($values:etc == 1)
+
+values = { }
+res = forevery foo bar etc xyz with x do
+	values:$x = ($values:$x or 0) + 1
+	if $x == etc then return foobar end
+end
+
+assert (sizeof $values == 3)
+assert ($values:foo == 1)
+assert ($values:bar == 1)
+assert ($values:etc == 1)
+assert ($res == foobar)

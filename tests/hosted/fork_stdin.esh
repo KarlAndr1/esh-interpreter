@@ -1,0 +1,6 @@
+x = printf "foo" | fork with ($stdin | as-string | print) | as-string
+assert ($x == "foo\n")
+
+write foo tmp/test.txt
+x = read tmp/test.txt | fork with ($stdin | as-string | print) | as-string
+assert ($x == "foo\n")

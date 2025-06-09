@@ -1,0 +1,1397 @@
+<html>
+<head><link rel='stylesheet' href='style.css'></head>
+<body>
+<div class='docs-index'>
+<h1>Index</h1>
+<p><a href='#collect'>collect</a></p>
+<p><a href='#try'>try</a></p>
+<p><a href='#iter'>iter</a></p>
+<p><a href='#ascii'>ascii</a></p>
+<p><a href='#match'>match</a></p>
+<p><a href='#load'>load</a></p>
+<p><a href='#include'>include</a></p>
+<p><a href='#next'>next</a></p>
+<p><a href='#gc'>gc</a></p>
+<p><a href='#map'>map</a></p>
+<p><a href='#is-defined'>is-defined</a></p>
+<p><a href='#join'>join</a></p>
+<p><a href='#min'>min</a></p>
+<p><a href='#gc-conf'>gc-conf</a></p>
+<p><a href='#strip'>strip</a></p>
+<p><a href='#as-string'>as-string</a></p>
+<p><a href='#strlen'>strlen</a></p>
+<p><a href='#fori'>fori</a></p>
+<p><a href='#values'>values</a></p>
+<p><a href='#for'>for</a></p>
+<p><a href='#print'>print</a></p>
+<p><a href='#max'>max</a></p>
+<p><a href='#numsort'>numsort</a></p>
+<p><a href='#to-json'>to-json</a></p>
+<p><a href='#foreach'>foreach</a></p>
+<p><a href='#loop'>loop</a></p>
+<p><a href='#chars'>chars</a></p>
+<p><a href='#is-space'>is-space</a></p>
+<p><a href='#beginswith'>beginswith</a></p>
+<p><a href='#includes'>includes</a></p>
+<p><a href='#utf16/encode'>utf16/encode</a></p>
+<p><a href='#repeat'>repeat</a></p>
+<p><a href='#yield'>yield</a></p>
+<p><a href='#foreach-in'>foreach-in</a></p>
+<p><a href='#forevery'>forevery</a></p>
+<p><a href='#parse-json'>parse-json</a></p>
+<p><a href='#isprint'>isprint</a></p>
+<p><a href='#stackdump'>stackdump</a></p>
+<p><a href='#alphsort'>alphsort</a></p>
+<p><a href='#exists'>exists</a></p>
+<p><a href='#slice'>slice</a></p>
+<p><a href='#split'>split</a></p>
+<p><a href='#escape-pattern'>escape-pattern</a></p>
+<p><a href='#write'>write</a></p>
+<p><a href='#filter'>filter</a></p>
+<p><a href='#entries'>entries</a></p>
+<p><a href='#load-dl'>load-dl</a></p>
+<p><a href='#co'>co</a></p>
+<p><a href='#nth'>nth</a></p>
+<p><a href='#charcode'>charcode</a></p>
+<p><a href='#eval'>eval</a></p>
+<p><a href='#substr'>substr</a></p>
+<p><a href='#keys'>keys</a></p>
+<p><a href='#isplit'>isplit</a></p>
+<p><a href='#sizeof'>sizeof</a></p>
+<p><a href='#endswith'>endswith</a></p>
+<p><a href='#is-string'>is-string</a></p>
+<p><a href='#getenv'>getenv</a></p>
+<p><a href='#replace'>replace</a></p>
+<p><a href='#puts'>puts</a></p>
+</div>
+<div class='docs-entries'>
+<h1>Entries</h1>
+<div><h2 id='collect'>collect</h2>
+<pre class='decl'><span class='hp'>collect</span> in</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>in</span></td>
+				<td><span class='type'>coroutine of T</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>array of T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Collects all values from a coroutine into an array.</p>
+</div>
+</div>
+<div><h2 id='try'>try</h2>
+<pre class='decl'><span class='hp'>try</span> fn ...</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>fn</span></td>
+				<td><span class='type'>T -> V</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>...</span></td>
+				<td><span class='type'>T</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>(string, null) | (null, V)</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Evaluates the given function $fn, passing the provided arguments $...</p>
+<p>If a panic occurs whilst evaluation $fn, it is caught and the error message is returned as the first value returned by try. In that case the second value returned is null.</p>
+<p>Otherwise if no panic occurs the first value returned by try is null, and the second value is the value returned by $fn.</p>
+</div>
+</div>
+<div><h2 id='iter'>iter</h2>
+<pre class='decl'><span class='hp'>iter</span> a</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>a</span></td>
+				<td><span class='type'>array of T</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>coroutine of T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns a coroutine that yields all values in an array in order.</p>
+</div>
+</div>
+<div><h2 id='ascii'>ascii</h2>
+<pre class='decl'><span class='hp'>ascii</span> ...</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>...</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Takes a series of ASCII codes in integer format and returns the resulting encoded string.</p>
+</div>
+</div>
+<div><h2 id='match'>match</h2>
+<pre class='decl'><span class='hp'>match</span> str pattern</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>pattern</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>array of string | null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Performs string pattern matching on the given string $str using $pattern, returning an array of captures, or null the string did not match.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>match "Hello world!" '(*)%s(*)' # Gives { "Hello", "world!" }
+
+match "Helloworld!" '(*)%s(*)' # Gives null</pre>
+</div>
+<br/>
+<p>The following special constructs are used in pattern matching:</p>
+<p>(...) - Captures</p>
+<p>%s    - One or more spaces</p>
+<p>%w    - One or more non-space characters</p>
+<p>%u    - One or more uppercase characters (A-Z)</p>
+<p>%l    - One or more lowercase characters (a-z)</p>
+<p>%a    - One or more alphabetic characters (A-Z, a-z)</p>
+<p>%h    - One or more hex digits (A-F, a-f, 0-9)</p>
+<p>%d    - One or more decimal digits (0-9)</p>
+<p>%%    - One or more '%' characters</p>
+<br/>
+<p>The special characters beginning with % can be suffixed with any of the following characters to modify how many must be matched</p>
+<p>+    - One or more (the default)</p>
+<p>*    - Zero or more</p>
+<p>!    - Exactly one</p>
+<p>?    - Zero or one</p>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>'%s*' # Match zero or more spaces</pre>
+</div>
+<br/>
+<p>Futhermore, the modifiers can be used by themselves, in which case they will match that number of *any* characters (bytes).</p>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>'*.txt' # Match any string has zero or more characters followed by .txt</pre>
+</div>
+</div>
+</div>
+<div><h2 id='load'>load</h2>
+<pre class='decl'><span class='hp'>load</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>function</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Compiles $str as code, and returns the resulting function.</p>
+<p>Any compilation errors cause a panic.</p>
+</div>
+</div>
+<div><h2 id='include'>include</h2>
+<pre class='decl'><span class='hp'>include</span> path</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>path</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Executes the script at the given $path.</p>
+</div>
+</div>
+<div><h2 id='next'>next</h2>
+<pre class='decl'><span class='hp'>next</span> s</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>stream of T</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns the next value in the stream $s, or null if at the end. Repeated calls to next after the stream has ended will continue returning null without any side-effects.</p>
+</div>
+</div>
+<div><h2 id='gc'>gc</h2>
+<pre class='decl'><span class='hp'>gc</span> step</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>step</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Manually triggers a garbage collection cycle. Runs for a maximum of $step number of steps.</p>
+<p>If $step is zero then the garbage collector will run until all garbage has been collected.</p>
+</div>
+</div>
+<div><h2 id='map'>map</h2>
+<pre class='decl'><span class='hp'>map</span> s f</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>stream of T</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>f</span></td>
+				<td><span class='type'>T -> V</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>stream of V</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns a new stream that is the result of applying $f to each value in $s.</p>
+</div>
+</div>
+<div><h2 id='is-defined'>is-defined</h2>
+<pre class='decl'><span class='hp'>is-defined</span> ...</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>...</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>boolean</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Checks whether all the given global variables are defined.</p>
+</div>
+</div>
+<div><h2 id='join'>join</h2>
+<pre class='decl'><span class='hp'>join</span> a separator</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>a</span></td>
+				<td><span class='type'>array of string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>separator</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Joins an array of strings, $a, into a single string separated by $separator.</p>
+<p>Returns the resulting string.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>join { a, b, c } "-" # Gives "a-b-c"</pre>
+</div>
+</div>
+</div>
+<div><h2 id='min'>min</h2>
+<pre class='decl'><span class='hp'>min</span> i ...</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>i</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>...</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>int</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns the smallest integer</p>
+</div>
+</div>
+<div><h2 id='gc-conf'>gc-conf</h2>
+<pre class='decl'><span class='hp'>gc-conf</span> freq step-size</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>freq</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>step-size</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Configures the garbage collector frequency and step size.</p>
+</div>
+</div>
+<div><h2 id='strip'>strip</h2>
+<pre class='decl'><span class='hp'>strip</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Strips leading and trailing whitespace from the given string $str and returns the resulting string.</p>
+</div>
+</div>
+<div><h2 id='as-string'>as-string</h2>
+<pre class='decl'><span class='hp'>as-string</span> s</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>charstream</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Reads the given charstream fully and returns the result as a string.</p>
+</div>
+</div>
+<div><h2 id='strlen'>strlen</h2>
+<pre class='decl'><span class='hp'>strlen</span></pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>int</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns the number of UTF-8 code points in the string.</p>
+</div>
+</div>
+<div><h2 id='fori'>fori</h2>
+<pre class='decl'><span class='hp'>fori</span> a callback</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>a</span></td>
+				<td><span class='type'>array of T</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>callback</span></td>
+				<td><span class='type'>int, T -> V</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>V | null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Iterates over an array $a in order, calling $callback for each index-value pair.</p>
+<p>If $callback returns a non-null value, the loop is stopped early.</p>
+<p>The return value is the non-null value returned by $callback, or null if the all values where iterated over.</p>
+<p>The function stops iteration at the first null value.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>fori { 1, 2, 3 } $print # Prints 1, 2, 3
+fori { 0 = x, 1 = y, 3 = z } $print # Prints x, y</pre>
+</div>
+</div>
+</div>
+<div><h2 id='values'>values</h2>
+<pre class='decl'><span class='hp'>values</span> obj</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>obj</span></td>
+				<td><span class='type'>object of T</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>coroutine of T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns a coroutine that yields all values in an object.</p>
+</div>
+</div>
+<div><h2 id='for'>for</h2>
+<pre class='decl'><span class='hp'>for</span> from to by? callback</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>from</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>to</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>by?</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>callback</span></td>
+				<td><span class='type'>int -> any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>any</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Iterates from $from (inclusive) until $to (exclusive), incrementing with $by at each step; or by 1 in $by is not given. For each step, $callback is called with the given integer value.</p>
+<p>If $callback returns a non-null value, the loop is stopped early.</p>
+<p>The return value is the non-null value returned by $callback, or null if all values were iterated through.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre># Prints 5, 6, 7
+for 5 8 $print
+
+# Prints 5 7 9
+for 5 11 2 $print</pre>
+</div>
+</div>
+</div>
+<div><h2 id='print'>print</h2>
+<pre class='decl'><span class='hp'>print</span> ...</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>...</span></td>
+				<td><span class='type'>any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Prints the given values to stdout, separated by spaces.</p>
+<p>Prints a newline at the end.</p>
+</div>
+</div>
+<div><h2 id='max'>max</h2>
+<pre class='decl'><span class='hp'>max</span> i ...</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>i</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>...</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>int</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns the largest integer</p>
+</div>
+</div>
+<div><h2 id='numsort'>numsort</h2>
+<pre class='decl'><span class='hp'>numsort</span> a</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>a</span></td>
+				<td><span class='type'>array of int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>array of int</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Sorts the entries in the given array in place (that is to say, it mutates the given array) numerically.</p>
+<p>Throws an error if any of the values in the array are not integers.</p>
+<p>If an error is thrown in the middle of sorting, the state of the array afterwards is undefined.</p>
+<p>Returns the given array.</p>
+</div>
+</div>
+<div><h2 id='to-json'>to-json</h2>
+<pre class='decl'><span class='hp'>to-json</span> x</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>x</span></td>
+				<td><span class='type'>any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Serializes a value into JSON.</p>
+<p>Objects are serialized into arrays if they contain only consecutive integer keys starting at 0, otherwise they are serialized into objects.</p>
+<p>Integers and booleans are serialized into strings.</p>
+</div>
+</div>
+<div><h2 id='foreach'>foreach</h2>
+<pre class='decl'><span class='hp'>foreach</span> s callback</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>stream of T</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>callback</span></td>
+				<td><span class='type'>T -> V</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null | V</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Repeatedly invokes `next` on the provided stream and calls $callback for each value.</p>
+<p>If $callback returns a non-null value, iteration is halted early and foreach returns the returned value.</p>
+<p>Otherwise null is returned at the end of iteration.</p>
+</div>
+</div>
+<div><h2 id='loop'>loop</h2>
+<pre class='decl'><span class='hp'>loop</span> callback</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>callback</span></td>
+				<td><span class='type'>() -> T</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Repeatedly invokes the given function $callback until a non-null value is returned.</p>
+<p>loop returns the returned non-null value.</p>
+</div>
+</div>
+<div><h2 id='chars'>chars</h2>
+<pre class='decl'><span class='hp'>chars</span> s</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>charstream</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>stream of string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns a stream of UTF-8 code points from the given charstream.</p>
+</div>
+</div>
+<div><h2 id='is-space'>is-space</h2>
+<pre class='decl'><span class='hp'>is-space</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>bool</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Checks whether the given string $str contains only whitespace. Ignores non-ASCII characters.</p>
+</div>
+</div>
+<div><h2 id='beginswith'>beginswith</h2>
+<pre class='decl'><span class='hp'>beginswith</span> str prefix</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>prefix</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>bool</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns true if the given $str begins with the string $prefix, otherwise false.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>beginswith "abc" "ab" # true
+
+beginswith "abc" bc" # false</pre>
+</div>
+</div>
+</div>
+<div><h2 id='includes'>includes</h2>
+<pre class='decl'><span class='hp'>includes</span> str substr</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>substr</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>bool</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Checks whether the given string $str includes the string $substr.</p>
+</div>
+</div>
+<div><h2 id='utf16/encode'>utf16/encode</h2>
+<pre class='decl'><span class='hp'>utf16/encode</span> s</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Encodes the given UTF-8 string into UTF-16 and returns the result.</p>
+</div>
+</div>
+<div><h2 id='repeat'>repeat</h2>
+<pre class='decl'><span class='hp'>repeat</span> str n</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>n</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Repeats the given string $str $n number of times and returns the resulting string.</p>
+</div>
+</div>
+<div><h2 id='yield'>yield</h2>
+<pre class='decl'><span class='hp'>yield</span> x</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>x</span></td>
+				<td><span class='type'>any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Yields the current coroutine thread with the given value $x.</p>
+<p>$x is the value returned by invoking `next` on the coroutine stream.</p>
+</div>
+</div>
+<div><h2 id='foreach-in'>foreach-in</h2>
+<pre class='decl'><span class='hp'>foreach-in</span> obj callback</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>obj</span></td>
+				<td><span class='type'>any</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>callback</span></td>
+				<td><span class='type'>string any -> any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>any</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Calls $callback with every key-value entry in the object $obj.</p>
+<p>The order of iteration is unspecified.</p>
+<p>If $callback returns a non-null value the loop is stopped early.</p>
+<p>The return values is the non-null value returned by $callback, or null if all entries were iterated through.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>foreach $obj with key value do print $key is $value end</pre>
+</div>
+</div>
+</div>
+<div><h2 id='forevery'>forevery</h2>
+<pre class='decl'><span class='hp'>forevery</span> ... callback</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>...</span></td>
+				<td><span class='type'>any</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>callback</span></td>
+				<td><span class='type'>any -> any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>any</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Calls the given callback with each value in ..., one at a time.</p>
+<p>If the callback returns a non-null value, then the function returns early without iterating over the rest of the values.</p>
+<p>The return value is the non-null return value of the callback, or null if all values were iterated through.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre># Prints 1 2 3
+forevery 1 2 3 with i do print $i end
+
+# x will be equal to 2
+x = forevery 1 2 3 with i do
+if $i == 2 then return $i end
+end</pre>
+</div>
+</div>
+</div>
+<div><h2 id='parse-json'>parse-json</h2>
+<pre class='decl'><span class='hp'>parse-json</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>any</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Parses a string as JSON and returns the result.</p>
+</div>
+</div>
+<div><h2 id='isprint'>isprint</h2>
+<pre class='decl'><span class='hp'>isprint</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>bool</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Checks whether or not all characters in the given string are printable. Ignores all non-ASCII characters.</p>
+</div>
+</div>
+<div><h2 id='stackdump'>stackdump</h2>
+<pre class='decl'><span class='hp'>stackdump</span></pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Prints a human-readable listing of the current interpreter stack state.</p>
+</div>
+</div>
+<div><h2 id='alphsort'>alphsort</h2>
+<pre class='decl'><span class='hp'>alphsort</span> a</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>a</span></td>
+				<td><span class='type'>array of string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>array of string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Sorts the entries in the given array in place (that is to say, it mutates the given array) alphabetically.</p>
+<p>Throws an error if any of the values in the array are not strings.</p>
+<p>If an error is thrown in the middle of sorting, the state of the array afterwards is undefined.</p>
+<p>Returns the given array.</p>
+</div>
+</div>
+<div><h2 id='exists'>exists</h2>
+<pre class='decl'><span class='hp'>exists</span> path</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>path</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>bool</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Checks whether a file at $path exists.</p>
+</div>
+</div>
+<div><h2 id='slice'>slice</h2>
+<pre class='decl'><span class='hp'>slice</span> a from to</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>a</span></td>
+				<td><span class='type'>array of T</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>from</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>to</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>array of T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Creates a slice of the given array $a starting at index $from (inclusive) and ending at index $to (exclusive).</p>
+<p>Both $to and $from may be negative, in which case they specify offsets from the end of the array (which is calculated using [sizeof]).</p>
+<p>If either index is out of bounds, the resulting array will be assigned null at those indicies (e.g those indicies will be empty).</p>
+<p>If the array is sparse (e.g contains null values) then these will also be included in the result array.</p>
+<p>Returns the resulting array.</p>
+</div>
+</div>
+<div><h2 id='split'>split</h2>
+<pre class='decl'><span class='hp'>split</span> s at</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>stream of string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>at</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>stream of string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Splits the given stream $s at each occurrence of the string delimiter $at.</p>
+<p>Treats the entire stream $s as a single continuous stream of characters.</p>
+<p>Returns a new stream yielding the resulting split sections, not including the delimiter.</p>
+</div>
+</div>
+<div><h2 id='escape-pattern'>escape-pattern</h2>
+<pre class='decl'><span class='hp'>escape-pattern</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Escapes all characters that have special meaning in pattern-matching functions (such as match).</p>
+</div>
+</div>
+<div><h2 id='write'>write</h2>
+<pre class='decl'><span class='hp'>write</span> str path</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string | coroutine of string | char-stream</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>path</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Writes the contents of the string or stream $str into the file at $path.</p>
+</div>
+</div>
+<div><h2 id='filter'>filter</h2>
+<pre class='decl'><span class='hp'>filter</span> s f</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>stream of T</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>f</span></td>
+				<td><span class='type'>T -> bool</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>stream of T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns a new stream that contains only the values from $s for which $f returns a truthy value.</p>
+</div>
+</div>
+<div><h2 id='entries'>entries</h2>
+<pre class='decl'><span class='hp'>entries</span> obj</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>obj</span></td>
+				<td><span class='type'>object of T</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>coroutine of { string, T }</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns a coroutine that yields all keys and values in an object.</p>
+<p>Each yielded value is an array of two items, where the first entry is the key and the second the value.</p>
+</div>
+</div>
+<div><h2 id='load-dl'>load-dl</h2>
+<pre class='decl'><span class='hp'>load-dl</span> path</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>path</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>any</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Attempts to load the provided shared library as a esh native library.</p>
+</div>
+</div>
+<div><h2 id='co'>co</h2>
+<pre class='decl'><span class='hp'>co</span> fn</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>fn</span></td>
+				<td><span class='type'>function</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>coroutine of typeof(fn)</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Turns the given function into a coroutine and returns the function.</p>
+<p>Note that the original function is modified.</p>
+</div>
+</div>
+<div><h2 id='nth'>nth</h2>
+<pre class='decl'><span class='hp'>nth</span> in i</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>in</span></td>
+				<td><span class='type'>coroutine of T</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>i</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>T</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns the nth item from a coroutine. 1 represents the first item.</p>
+<p>Returns null if $i is less than 1</p>
+</div>
+</div>
+<div><h2 id='charcode'>charcode</h2>
+<pre class='decl'><span class='hp'>charcode</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>int</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns the UTF-8 code point of the first character of the given string.</p>
+<p>Panics if the string is empty.</p>
+</div>
+</div>
+<div><h2 id='eval'>eval</h2>
+<pre class='decl'><span class='hp'>eval</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>any</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Compiles and evaluates $str as code, and returns the resulting value.</p>
+<p>Any compilation errors cause a panic.</p>
+</div>
+</div>
+<div><h2 id='substr'>substr</h2>
+<pre class='decl'><span class='hp'>substr</span> from to?</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>from</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>to?</span></td>
+				<td><span class='type'>int</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Extracts a substring from the given string.</p>
+<p>Both $from and $to specify byte offsets into the string.</p>
+<p>Negative offsets are treated as relative to the end of the string.-1 refers to the last byte in the string.</p>
+<p>If $to is not given, then the entire string after $to will be extracted.</p>
+<p>$from is inclusive, whilst $to is exclusive.</p>
+<p>Returns the extracted substring.</p>
+</div>
+</div>
+<div><h2 id='keys'>keys</h2>
+<pre class='decl'><span class='hp'>keys</span> obj</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>obj</span></td>
+				<td><span class='type'>object</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>coroutine of string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns a coroutine that yields all keys in an object.</p>
+</div>
+</div>
+<div><h2 id='isplit'>isplit</h2>
+<pre class='decl'><span class='hp'>isplit</span> str delimiter?</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>delimiter?</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>array of string</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Splits the given string $str at each occurence of $delimiter.</p>
+<p>If $delimiter is not given, the string is split by whitespace.</p>
+<p>The return value is an array of all resulting string segments.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>isplit "a, b, c" "," # Returns { "a", " b", " c" }
+
+isplit "a    b c" # Returns { "a", "b", "c" }</pre>
+</div>
+</div>
+</div>
+<div><h2 id='sizeof'>sizeof</h2>
+<pre class='decl'><span class='hp'>sizeof</span> x</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>x</span></td>
+				<td><span class='type'>any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>int</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>If $x is a string, the number of bytes in the string is returned.</p>
+<p>Otherwise the number of key-value pairs in $x is returned.</p>
+<br/>
+<div class='codeblock'>
+<h3 class='title'>Examples</h3>
+<pre>sizeof "foo" # Returns 3
+
+sizeof { a, b, c, d } # Returns 4
+
+sizeof { x = 1, y = 2 } # Returns 2</pre>
+</div>
+</div>
+</div>
+<div><h2 id='endswith'>endswith</h2>
+<pre class='decl'><span class='hp'>endswith</span> str suffix</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>suffix</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>bool</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Checks whether the given string $str ends with the string $suffix.</p>
+</div>
+</div>
+<div><h2 id='is-string'>is-string</h2>
+<pre class='decl'><span class='hp'>is-string</span> x</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>x</span></td>
+				<td><span class='type'>any</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>bool</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Checks whether the given value is a string.</p>
+</div>
+</div>
+<div><h2 id='getenv'>getenv</h2>
+<pre class='decl'><span class='hp'>getenv</span> name</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>name</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>string | null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Returns the value of the environment variable with the given $name, or null if it does not exist.</p>
+</div>
+</div>
+<div><h2 id='replace'>replace</h2>
+<pre class='decl'><span class='hp'>replace</span> s a b</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>s</span></td>
+				<td><span class='type'>str</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>a</span></td>
+				<td><span class='type'>str</span></td>
+			</tr>
+<tr>
+				<td><span class='arg-name'>b</span></td>
+				<td><span class='type'>str</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>str</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Replaces every occurence of $a in $s with $b, and returns the result.</p>
+<p>Returns $s unchanged if $a has a length of zero.</p>
+<p>If $b has a length of zero, each occurrence of $a is deleted.</p>
+</div>
+</div>
+<div><h2 id='puts'>puts</h2>
+<pre class='decl'><span class='hp'>puts</span> str</pre>
+<div class='typedefs'>
+<h3>Types</h3>
+<table class='arg-types'>
+<tr>
+				<td><span class='arg-name'>str</span></td>
+				<td><span class='type'>string</span></td>
+			</tr>
+<tr>
+			<td class='keyword'>return</td>
+			<td><span class='type'>null</span></td>
+		</tr>
+</table>
+<div class='doc-entry'>
+<p>Writes the provided string into stdout, without a trailing newline.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

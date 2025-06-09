@@ -1,0 +1,82 @@
+.codeblock > .title {
+	font-size: 1em;
+	color: #205050;
+	margin-bottom: 0.1em;
+}
+
+.codeblock > pre {
+	margin-top: 0;
+	border: solid black 1px;
+	padding: 1em;
+	width: fit-content;
+	background: #f0f0f0;
+}
+
+.decl {
+	background: #f0f0f0;
+	width: fit-content;
+	border: solid black 1px;
+	padding: 0.25em;
+}
+
+pre > .hp, .arg-name {
+	color: purple;
+}
+
+.keyword {
+	color: darkorange;
+}
+
+.type {
+	color: darkcyan;
+}
+
+.doc-entry {
+	border-bottom: solid black 1px;
+}
+
+.arg-types {
+	border-collapse: collapse;
+}
+
+.typedefs {
+	border-bottom: solid black 1px;
+	width: fit-content;
+}
+
+.arg-types tr {
+	background: #f0f0f0;
+}
+
+.arg-types tbody {
+	border: solid black 1px;
+}
+
+.arg-types td {
+	margin: 0;
+	padding: 0.25em;
+	padding-right: 1em;
+}
+
+body {
+	margin: 2em auto;
+	padding: 1em;
+	border: solid black 1px;
+	background: white;
+}
+
+html {
+	background: #f0f0f0;
+}
+
+@media (orientation: landscape) {
+	body {
+		width: 40vw;
+	}
+}
+
+@media (orientation: portrait) {
+	body {
+		width: 90vw;
+	}
+}
